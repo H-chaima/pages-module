@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pages Module - Documentation Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #FDF6EC;
+            color: #4A3728;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .navbar {
+            background: #FFF8F0;
+            border-bottom: 1px solid #EDE0D4;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #D35400;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6B4C3A;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: #F5E6D3;
+            color: #D35400;
+        }
+
+        .user-email {
+            font-size: 14px;
+            color: #8B6B4A;
+            margin-right: 16px;
+        }
+
+        .logout-btn {
+            background: transparent;
+            color: #D35400;
+            border: 1px solid #D35400;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .logout-btn:hover {
+            background: #F5E6D3;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #4A3728;
+        }
+
+        .btn-primary {
+            background: #D35400;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #A04000;
+        }
+
+        .btn-secondary {
+            background: #BD8A5A;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-secondary:hover {
+            background: #A67C52;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #D35400;
+            border: 1px solid #D35400;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-outline:hover {
+            background: #F5E6D3;
+        }
+
+        .btn-drafts {
+            background: transparent;
+            color: #D35400;
+            border: 1px solid #D35400;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-drafts:hover {
+            background: #F5E6D3;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 16px;
+            border: 1px solid #EDE0D4;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 32px;
+            background: white;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #D35400;
+            box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.1);
+        }
+
+        .pages-list {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #EDE0D4;
+            overflow: hidden;
+        }
+
+        .page-item {
+            padding: 20px 24px;
+            border-bottom: 1px solid #EDE0D4;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .page-item:last-child {
+            border-bottom: none;
+        }
+
+        .page-item:hover {
+            background: #FDF6EC;
+        }
+
+        .page-title {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 6px;
+            color: #4A3728;
+        }
+
+        .page-preview {
+            font-size: 14px;
+            color: #8B6B4A;
+        }
+
+        .page-item.draft {
+            border-left: 4px solid #D35400;
+        }
+
+        .empty-state {
+            padding: 60px;
+            text-align: center;
+            color: #BD8A5A;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #EDE0D4;
+            padding: 32px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 14px;
+            color: #4A3728;
+        }
+
+        .title-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 24px;
+            font-weight: 600;
+            border: 1px solid #EDE0D4;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-family: inherit;
+        }
+
+        .title-input:focus {
+            outline: none;
+            border-color: #D35400;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #FDF6EC;
+            border-radius: 12px;
+            border: 1px solid #EDE0D4;
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 4px;
+            padding-right: 12px;
+            border-right: 1px solid #EDE0D4;
+            margin-right: 8px;
+        }
+
+        .toolbar-group:last-child {
+            border-right: none;
+        }
+
+        .toolbar-btn {
+            background: white;
+            border: 1px solid #EDE0D4;
+            border-radius: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-size: 13px;
+            color: #4A3728;
+        }
+
+        .toolbar-btn:hover {
+            background: #F5E6D3;
+            border-color: #D35400;
+            color: #D35400;
+        }
+
+        .toolbar-select {
+            padding: 6px 10px;
+            border: 1px solid #EDE0D4;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            color: #4A3728;
+        }
+
+        .toolbar-select:hover {
+            border-color: #D35400;
+        }
+
+        .content-editor {
+            width: 100%;
+            min-height: 350px;
+            padding: 16px;
+            border: 1px solid #EDE0D4;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .content-editor:focus {
+            outline: none;
+            border-color: #D35400;
+        }
+
+        .content-editor.empty:before {
+            content: "Start writing your content here...";
+            color: #999;
+            font-style: italic;
+        }
+
+        .view-content {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #EDE0D4;
+            padding: 48px;
+        }
+
+        .view-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #EDE0D4;
+            color: #4A3728;
+        }
+
+        .view-body {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #4A3728;
+        }
+
+        .view-body h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            color: #4A3728;
+        }
+
+        .view-body h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            color: #5C3E2E;
+        }
+
+        .view-body h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 16px;
+            margin-bottom: 10px;
+            color: #6B4C3A;
+        }
+
+        .view-body p {
+            margin-bottom: 16px;
+        }
+
+        .view-body ul,
+        .view-body ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .view-body li {
+            margin-bottom: 8px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .message-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+
+        .message-box {
+            background: white;
+            padding: 24px 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .message-box.success {
+            border-top: 4px solid #D35400;
+        }
+
+        .message-box.error {
+            border-top: 4px solid #C0392B;
+        }
+
+        .message-box p {
+            font-size: 16px;
+            color: #4A3728;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: #BD8A5A;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-link:hover {
+            color: #D35400;
+        }
+
+        /* Auth Styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #EDE0D4;
+            padding: 48px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .auth-card h2 {
+            margin-bottom: 24px;
+            color: #4A3728;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #EDE0D4;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: #D35400;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: #D35400;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .auth-switch {
+            color: #D35400;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .auth-switch:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #BD8A5A;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Auth Container (Login/Sign Up) -->
+    <div id="authContainer" class="auth-container">
+        <div class="auth-card">
+            <h2>Pages Module</h2>
+            <div id="authForm">
+                <input type="email" id="email" class="auth-input" placeholder="Email">
+                <input type="password" id="password" class="auth-input" placeholder="Password">
+                <button id="signInBtn" class="auth-btn">Sign In</button>
+                <p>Don't have an account? <span id="showSignUp" class="auth-switch">Sign Up</span></p>
+            </div>
+            <div id="signUpForm" style="display:none;">
+                <input type="email" id="signupEmail" class="auth-input" placeholder="Email">
+                <input type="password" id="signupPassword" class="auth-input" placeholder="Password">
+                <button id="signUpBtn" class="auth-btn">Sign Up</button>
+                <p>Already have an account? <span id="showSignIn" class="auth-switch">Sign In</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container (shown after login) -->
+    <div id="appContainer" style="display:none;">
+        <div class="navbar">
+            <div class="nav-content">
+                <a class="logo" onclick="navigateTo('home')">📄 Pages</a>
+                <div class="nav-links">
+                    <a onclick="navigateTo('home')">Home</a>
+                    <a onclick="navigateTo('create')">Create New</a>
+                    <span id="userEmail" class="user-email"></span>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="app">
+            <div class="loading">Loading pages...</div>
+        </div>
+    </div>
+
+    <div id="messageOverlay" class="message-overlay">
+        <div id="messageBox" class="message-box">
+            <p id="messageText"></p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3001/api';
+        let editingPageId = null;
+        let showDraftsMode = false;
+        let authToken = null;
+
+        function showMessage(text, type = 'success') {
+            const overlay = document.getElementById('messageOverlay');
+            const box = document.getElementById('messageBox');
+            const textSpan = document.getElementById('messageText');
+            
+            textSpan.textContent = text;
+            box.className = `message-box ${type}`;
+            overlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 2000);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function stripHtml(html) {
+            if (!html) return '';
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            return div.textContent || '';
+        }
+
+        // ==================== AUTH FUNCTIONS ====================
+        async function signUp() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            if (!email || !password) {
+                showMessage('Please enter email and password', 'error');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${API_URL}/auth/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                
+                if (data.error) {
+                    showMessage(data.error, 'error');
+                } else {
+                    showMessage('Account created! Please sign in.', 'success');
+                    showSignInForm();
+                    document.getElementById('signupEmail').value = '';
+                    document.getElementById('signupPassword').value = '';
+                }
+            } catch (error) {
+                showMessage('Error signing up', 'error');
+            }
+        }
+
+        async function signIn() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showMessage('Please enter email and password', 'error');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${API_URL}/auth/signin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                
+                if (data.error) {
+                    showMessage(data.error, 'error');
+                } else {
+                    authToken = data.token;
+                    localStorage.setItem('authToken', authToken);
+                    localStorage.setItem('userEmail', data.user.email);
+                    showApp();
+                }
+            } catch (error) {
+                showMessage('Error signing in', 'error');
+            }
+        }
+
+        async function logout() {
+            try {
+                await fetch(`${API_URL}/auth/signout`, { method: 'POST' });
+            } catch (e) {
+                // Ignore errors on logout
+            }
+            authToken = null;
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userEmail');
+            showAuth();
+        }
+
+        function showApp() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+            document.getElementById('userEmail').textContent = localStorage.getItem('userEmail');
+            renderHomePage();
+        }
+
+        function showAuth() {
+            document.getElementById('authContainer').style.display = 'flex';
+            document.getElementById('appContainer').style.display = 'none';
+            showSignInForm();
+        }
+
+        function showSignUpForm() {
+            document.getElementById('authForm').style.display = 'none';
+            document.getElementById('signUpForm').style.display = 'block';
+        }
+
+        function showSignInForm() {
+            document.getElementById('signUpForm').style.display = 'none';
+            document.getElementById('authForm').style.display = 'block';
+        }
+
+        // ==================== API FUNCTIONS ====================
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            };
+        }
+
+        async function apiFetch(url, options = {}) {
+            const res = await fetch(url, {
+                ...options,
+                headers: getAuthHeaders()
+            });
+            return res.json();
+        }
+
+        async function getPublishedPages() {
+            try {
+                const data = await apiFetch(`${API_URL}/pages`);
+                return data;
+            } catch (error) {
+                showMessage('Cannot connect to backend', 'error');
+                return [];
+            }
+        }
+
+        async function getAllPages() {
+            try {
+                const data = await apiFetch(`${API_URL}/pages/all`);
+                return data;
+            } catch (error) {
+                showMessage('Cannot connect to backend', 'error');
+                return [];
+            }
+        }
+
+        async function getPage(id) {
+            try {
+                return await apiFetch(`${API_URL}/pages/${id}`);
+            } catch (error) {
+                showMessage('Error loading page', 'error');
+                return null;
+            }
+        }
+
+        async function savePage(data) {
+            try {
+                return await apiFetch(`${API_URL}/pages`, {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+            } catch (error) {
+                showMessage('Error saving page', 'error');
+                return null;
+            }
+        }
+
+        async function searchPages(query) {
+            if (!query) return getPublishedPages();
+            try {
+                return await apiFetch(`${API_URL}/search/${encodeURIComponent(query)}`);
+            } catch (error) {
+                return [];
+            }
+        }
+
+        // ==================== FORMATTING FUNCTIONS ====================
+        function formatText(command) {
+            if (command === 'heading') {
+                const headingSelect = document.getElementById('headingSelect');
+                const headingLevel = headingSelect ? headingSelect.value : 'h2';
+                document.execCommand('formatBlock', false, headingLevel);
+            } else if (command === 'fontSize') {
+                const select = document.getElementById('fontSizeSelect');
+                const size = select.value;
+                let fontSize = '14px';
+                if (size === 'small') fontSize = '12px';
+                if (size === 'normal') fontSize = '14px';
+                if (size === 'large') fontSize = '18px';
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0 && selection.toString().length > 0) {
+                    const span = document.createElement('span');
+                    span.style.fontSize = fontSize;
+                    span.className = `text-${size}`;
+                    const range = selection.getRangeAt(0);
+                    range.surroundContents(span);
+                }
+            } else {
+                document.execCommand(command, false, null);
+            }
+            document.getElementById('contentEditor')?.focus();
+        }
+
+        function applyHeading() {
+            const select = document.getElementById('headingSelect');
+            document.execCommand('formatBlock', false, select.value);
+            document.getElementById('contentEditor').focus();
+        }
+
+        function applyFontSize() {
+            const select = document.getElementById('fontSizeSelect');
+            const size = select.value;
+            let fontSize = '14px';
+            let sizeClass = 'text-normal';
+            if (size === 'small') { fontSize = '12px'; sizeClass = 'text-small'; }
+            if (size === 'normal') { fontSize = '14px'; sizeClass = 'text-normal'; }
+            if (size === 'large') { fontSize = '18px'; sizeClass = 'text-large'; }
+
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0 && selection.toString().length > 0) {
+                const span = document.createElement('span');
+                span.style.fontSize = fontSize;
+                span.className = sizeClass;
+                const range = selection.getRangeAt(0);
+                range.surroundContents(span);
+            }
+            document.getElementById('contentEditor').focus();
+        }
+
+        function isEditorEmpty() {
+            const editor = document.getElementById('contentEditor');
+            if (!editor) return true;
+            const text = editor.innerText.trim();
+            const html = editor.innerHTML.trim();
+            return text === '' || html === '<br>' || html === '<div><br></div>';
+        }
+
+        function updateEditorPlaceholder() {
+            const editor = document.getElementById('contentEditor');
+            if (!editor) return;
+            if (isEditorEmpty()) {
+                editor.classList.add('empty');
+            } else {
+                editor.classList.remove('empty');
+            }
+        }
+
+        // ==================== SCREENS ====================
+        async function renderHomePage() {
+            const app = document.getElementById('app');
+            app.innerHTML = '<div class="loading">Loading pages...</div>';
+
+            let pages = [];
+            if (showDraftsMode) {
+                const allPages = await getAllPages();
+                // Filter to only show drafts
+                pages = allPages.filter(page => page.status === 'draft');
+            } else {
+                pages = await getPublishedPages();
+            }
+            window.allPages = pages;
+
+            app.innerHTML = `
+                <div class="page-header">
+                    <h1>${showDraftsMode ? 'Drafts' : 'All Pages'}</h1>
+                    <button class="btn-drafts" onclick="toggleDraftsMode()">
+                        ${showDraftsMode ? '← Show Published' : '📄 Show Drafts'}
+                    </button>
+                </div>
+                <input type="text" class="search-bar" id="searchInput" placeholder="Search by title..." onkeyup="handleSearch()">
+                <div class="pages-list" id="pagesList"></div>
+            `;
+
+            filterPages();
+        }
+
+        function toggleDraftsMode() {
+            showDraftsMode = !showDraftsMode;
+            renderHomePage();
+        }
+
+        function filterPages() {
+            const pages = window.allPages || [];
+            const listContainer = document.getElementById('pagesList');
+            if (!listContainer) return;
+
+            if (pages.length === 0) {
+                listContainer.innerHTML = '<div class="empty-state">No pages found. Create your first page!</div>';
+                return;
+            }
+
+            listContainer.innerHTML = pages.map(page => `
+                <div class="page-item ${page.status === 'draft' ? 'draft' : ''}" onclick="viewPage('${page.id}')">
+                    <div class="page-title">${escapeHtml(page.title)} ${page.status === 'draft' ? '<span style="font-size:12px; color:#D35400; font-weight:normal;">(Draft)</span>' : ''}</div>
+                    <div class="page-preview">${escapeHtml(stripHtml(page.content).substring(0, 120))}...</div>
+                </div>
+            `).join('');
+        }
+
+        async function handleSearch() {
+            const query = document.getElementById('searchInput')?.value || '';
+            
+            if (showDraftsMode) {
+                const allPages = await getAllPages();
+                const drafts = allPages.filter(page => page.status === 'draft');
+                if (query) {
+                    window.allPages = drafts.filter(page => page.title.toLowerCase().includes(query.toLowerCase()));
+                } else {
+                    window.allPages = drafts;
+                }
+                filterPages();
+            } else {
+                const pages = await searchPages(query);
+                window.allPages = pages;
+                filterPages();
+            }
+        }
+
+        function renderCreatePage(editMode = false, pageId = null) {
+            editingPageId = pageId;
+
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <a class="back-link" onclick="navigateTo('home')">← Back to all pages</a>
+                <div class="form-card">
+                    <h2 style="margin-bottom: 24px; color: #4A3728;">${editMode ? 'Edit Page' : 'Create New Page'}</h2>
+
+                    <label class="form-label">Page Title</label>
+                    <input type="text" class="title-input" id="pageTitle" placeholder="Enter page title...">
+
+                    <label class="form-label">Content</label>
+                    <div class="toolbar">
+                        <div class="toolbar-group">
+                            <select id="headingSelect" class="toolbar-select" onchange="applyHeading()">
+                                <option value="h1">H1 - Large Heading</option>
+                                <option value="h2" selected>H2 - Medium Heading</option>
+                                <option value="h3">H3 - Small Heading</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-group">
+                            <select id="fontSizeSelect" class="toolbar-select" onchange="applyFontSize()">
+                                <option value="small">Small</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-group">
+                            <button type="button" class="toolbar-btn" onclick="formatText('bold')"><b>B</b></button>
+                            <button type="button" class="toolbar-btn" onclick="formatText('italic')"><i>I</i></button>
+                        </div>
+                        <div class="toolbar-group">
+                            <button type="button" class="toolbar-btn" onclick="formatText('insertUnorderedList')">• List</button>
+                            <button type="button" class="toolbar-btn" onclick="formatText('insertOrderedList')">1. List</button>
+                        </div>
+                    </div>
+
+                    <div id="contentEditor" class="content-editor" contenteditable="true"></div>
+
+                    <div class="action-buttons">
+                        <button class="btn-secondary" id="saveDraftBtn">Save as Draft</button>
+                        <button class="btn-primary" id="publishBtn">${editMode ? 'Update & Publish' : 'Publish'}</button>
+                    </div>
+                </div>
+            `;
+
+            // Add event listeners to the new buttons
+            document.getElementById('saveDraftBtn').addEventListener('click', saveDraft);
+            document.getElementById('publishBtn').addEventListener('click', publishPage);
+
+            const editor = document.getElementById('contentEditor');
+            editor.addEventListener('input', updateEditorPlaceholder);
+            updateEditorPlaceholder();
+
+            if (editMode && pageId) {
+                loadPageForEditing(pageId);
+            }
+        }
+
+        async function loadPageForEditing(pageId) {
+            const page = await getPage(pageId);
+            if (page) {
+                document.getElementById('pageTitle').value = page.title;
+                const editor = document.getElementById('contentEditor');
+                editor.innerHTML = page.content;
+                editor.classList.remove('empty');
+            }
+        }
+
+        async function saveDraft() {
+            const title = document.getElementById('pageTitle').value;
+            const content = document.getElementById('contentEditor').innerHTML;
+
+            if (!title.trim()) {
+                showMessage('Please enter a page title', 'error');
+                return;
+            }
+
+            const result = await savePage({
+                id: editingPageId,
+                title: title,
+                content: content,
+                status: 'draft'
+            });
+
+            if (result && result.success) {
+                if (result.id) editingPageId = result.id;
+                showMessage('Draft saved successfully!');
+            } else if (result && result.error) {
+                showMessage(result.error, 'error');
+            }
+        }
+
+        async function publishPage() {
+            const title = document.getElementById('pageTitle').value;
+            const content = document.getElementById('contentEditor').innerHTML;
+
+            if (!title.trim()) {
+                showMessage('Please enter a page title', 'error');
+                return;
+            }
+
+            if (isEditorEmpty()) {
+                showMessage('Please add some content to your page', 'error');
+                return;
+            }
+
+            const result = await savePage({
+                id: editingPageId,
+                title: title,
+                content: content,
+                status: 'published'
+            });
+
+            if (result && result.success) {
+                showMessage('Page published successfully!');
+                navigateTo('home');
+            } else if (result && result.error) {
+                showMessage(result.error, 'error');
+            }
+        }
+
+        async function viewPage(pageId) {
+            const page = await getPage(pageId);
+            if (!page || page.error) {
+                showMessage('Page not found', 'error');
+                navigateTo('home');
+                return;
+            }
+
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <a class="back-link" onclick="navigateTo('home')">← Back to all pages</a>
+                <div class="view-content">
+                    <div class="view-title">${escapeHtml(page.title)} ${page.status === 'draft' ? '<span style="font-size:16px; color:#D35400;">(Draft)</span>' : ''}</div>
+                    <div class="view-body">${page.content}</div>
+                    <div class="action-buttons">
+                        <button class="btn-outline" onclick="editPage('${page.id}')">✏️ Edit Page</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function editPage(pageId) {
+            renderCreatePage(true, pageId);
+        }
+
+        function navigateTo(screen, param = null) {
+            if (screen === 'home') {
+                showDraftsMode = false;
+                renderHomePage();
+            } else if (screen === 'create') {
+                renderCreatePage(false, null);
+            } else if (screen === 'view' && param) {
+                viewPage(param);
+            }
+        }
+
+        // ==================== EVENT LISTENERS ====================
+        document.getElementById('showSignUp').addEventListener('click', showSignUpForm);
+        document.getElementById('showSignIn').addEventListener('click', showSignInForm);
+        document.getElementById('signInBtn').addEventListener('click', signIn);
+        document.getElementById('signUpBtn').addEventListener('click', signUp);
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
+        // Enter key support for login/signup
+        document.getElementById('email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') signIn();
+        });
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') signIn();
+        });
+        document.getElementById('signupEmail').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') signUp();
+        });
+        document.getElementById('signupPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') signUp();
+        });
+
+        // Make functions global for onclick
+        window.navigateTo = navigateTo;
+        window.viewPage = viewPage;
+        window.editPage = editPage;
+        window.formatText = formatText;
+        window.saveDraft = saveDraft;
+        window.publishPage = publishPage;
+        window.applyHeading = applyHeading;
+        window.applyFontSize = applyFontSize;
+        window.handleSearch = handleSearch;
+        window.toggleDraftsMode = toggleDraftsMode;
+
+        // Check if user was previously logged in
+        const savedToken = localStorage.getItem('authToken');
+        if (savedToken) {
+            authToken = savedToken;
+            showApp();
+        } else {
+            showAuth();
+        }
+    </script>
+
+</body>
+</html>
